@@ -2,3 +2,8 @@ body {
   font-family: "Gowun Dodum";
   padding: 20px 60px;
 }
+
+a {
+  text-decoration: none;
+  color: black;
+}
