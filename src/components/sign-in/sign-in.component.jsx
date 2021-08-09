@@ -33,7 +33,7 @@ const SignIn = () => {
         <FormInput
           name="email"
           type="email"
-          label="email"
+          label="Email"
           value={email}
           onChange={handleChangeEmail}
           required
@@ -41,7 +41,7 @@ const SignIn = () => {
         <FormInput
           name="password"
           type="password"
-          label="password"
+          label="Password"
           value={password}
           onChange={handleChangePassword}
           required
