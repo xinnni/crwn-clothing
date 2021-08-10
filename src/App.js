@@ -26,7 +26,6 @@ const App = () => {
             ...snapShot.data(),
           });
         });
-        console.log(currentUser);
       }
       setCurrentUser(userAuth);
     });
