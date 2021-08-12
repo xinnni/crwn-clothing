@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
@@ -7,54 +7,43 @@ import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 
 import "./sign-up.styles.scss";
 
-const SignUp = () => {
-  const [displayName, setDisplayName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+export default function Signup() {
+  const [signUp, setSignUp] = useState({
+    displayName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-  const handleSubmit = useCallback(
-    async (e) => {
-      e.preventDefault();
-      if (password !== confirmPassword) {
-        alert("Hey, password don't match!");
-        return;
-      }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (signUp.password !== signUp.confirmPassword) {
+      alert("Passwords don't match");
+      return;
+    }
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(
+        signUp.email,
+        signUp.password
+      );
+      await createUserProfileDocument(user, {
+        displayName: signUp.displayName,
+      });
 
-      try {
-        const { user } = await auth.createUserWithEmailAndPassword(
-          email,
-          password
-        );
-
-        await createUserProfileDocument(user, { displayName });
-
-        setDisplayName("");
-        setEmail("");
-        setPassword("");
-        setConfirmPassword("");
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    [displayName, email, password, confirmPassword]
-  );
-
-  const handleChangeDisplayName = useCallback((e) => {
-    setDisplayName(e.target.value);
-  }, []);
-
-  const handleChangeEmail = useCallback((e) => {
-    console.log(e.target.value);
-    setEmail(e.target.value);
-  }, []);
-  const handleChangePassword = useCallback((e) => {
-    setPassword(e.target.value);
-  }, []);
-
-  const handleChangeConfirmPassword = useCallback((e) => {
-    setConfirmPassword(e.target.value);
-  }, []);
+      setSignUp({
+        displayName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setSignUp({ ...signUp, [name]: value });
+  }
 
   return (
     <div className="sign-up">
@@ -64,8 +53,8 @@ const SignUp = () => {
         <FormInput
           type="text"
           name="displayName"
-          value={displayName}
-          onChange={handleChangeDisplayName}
+          value={signUp.displayName}
+          onChange={handleChange}
           label="Display Name"
           required
         />
@@ -73,8 +62,8 @@ const SignUp = () => {
         <FormInput
           type="email"
           name="email"
-          value={email}
-          onChange={handleChangeEmail}
+          value={signUp.email}
+          onChange={handleChange}
           label="Email"
           required
         />
@@ -82,8 +71,8 @@ const SignUp = () => {
         <FormInput
           type="password"
           name="password"
-          value={password}
-          onChange={handleChangePassword}
+          value={signUp.password}
+          onChange={handleChange}
           label="Password"
           required
         />
@@ -91,8 +80,8 @@ const SignUp = () => {
         <FormInput
           type="password"
           name="confirmPassword"
-          value={confirmPassword}
-          onChange={handleChangeConfirmPassword}
+          value={signUp.confirmPassword}
+          onChange={handleChange}
           label="Confirm Password"
           required
         />
@@ -100,6 +89,4 @@ const SignUp = () => {
       </form>
     </div>
   );
-};
-
-export default SignUp;
+}

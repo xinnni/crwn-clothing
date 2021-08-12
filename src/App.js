@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Route, Switch } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
+import { Context } from "./Context";
 
 import "./App.css";
 
@@ -7,42 +8,32 @@ import HomePage from "../src/components/pages/homepage/homepage.component";
 import ShopPage from "../src/components/pages/shop/shop.component";
 import Header from "./components/header/header.component";
 import SignInAndSignUpPage from "./components/pages/sign-in-and-sign-up/sign-in-and-sign-up";
-import {
-  auth,
-  createUserProfileDocument,
-} from "../src/firebase/firebase.utils";
+import { auth } from "../src/firebase/firebase.utils";
 
-const App = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+export default function App() {
+  const { currentUser, setCurrentUser } = useContext(Context);
 
   useEffect(() => {
-    const unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-
-        userRef.onSnapshot((snapShot) => {
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data(),
-          });
-        });
-      }
-      setCurrentUser(userAuth);
+    auth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+      console.log(user);
     });
-    return () => {
-      unsubscribeFromAuth();
-    };
-  }, [currentUser]);
+  }, []);
+
   return (
     <div>
-      <Header currentUser={currentUser} />
+      <Header />
       <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/shop" component={ShopPage} />
-        <Route path="/signin" component={SignInAndSignUpPage} />
+        <Route exact path="/">
+          <HomePage />
+        </Route>
+        <Route path="/shop">
+          <ShopPage />
+        </Route>
+        <Route exact path="/signin">
+          {currentUser ? <Redirect to="/" /> : <SignInAndSignUpPage />}
+        </Route>
       </Switch>
     </div>
   );
-};
-
-export default App;
+}

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
@@ -7,29 +7,24 @@ import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
 
 import "./sign-in.styles.scss";
 
-const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function SignIn() {
+  const [user, setUser] = useState({ email: "", password: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await auth.signInWithEmailAndPassword(email, password);
-      setEmail("");
-      setPassword("");
+      await auth.signInWithEmailAndPassword(user.email, user.password);
+      setUser({ email: "", password: "" });
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleChangeEmail = useCallback((e) => {
-    setEmail(e.target.value);
-  }, []);
-
-  const handleChangePassword = useCallback((e) => {
-    setPassword(e.target.value);
-  }, []);
+  const handleChange = (event) => {
+    const { value, name } = event.target;
+    setUser({ ...user, [name]: value });
+  };
 
   return (
     <div className="sign-in">
@@ -40,16 +35,16 @@ const SignIn = () => {
           name="email"
           type="email"
           label="Email"
-          value={email}
-          onChange={handleChangeEmail}
+          value={user.email}
+          onChange={handleChange}
           required
         />
         <FormInput
           name="password"
           type="password"
           label="Password"
-          value={password}
-          onChange={handleChangePassword}
+          value={user.password}
+          onChange={handleChange}
           required
         />
         <div className="buttons">
@@ -61,6 +56,4 @@ const SignIn = () => {
       </form>
     </div>
   );
-};
-
-export default SignIn;
+}

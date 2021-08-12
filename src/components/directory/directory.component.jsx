@@ -6,7 +6,7 @@ import { dummyData } from "../../static/dummyData";
 
 import "./directory.styles.scss";
 
-function Directory() {
+export default function Directory() {
   const [sections, setSections] = useState(dummyData);
 
   return (
@@ -17,5 +17,3 @@ function Directory() {
     </div>
   );
 }
-
-export default Directory;
