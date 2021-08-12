@@ -3,13 +3,15 @@ import { Link } from "react-router-dom";
 import { Context } from "../../Context";
 
 import { auth } from "../../firebase/firebase.utils";
+import CartIcon from "../cart-icon/cart-icon.component";
+import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 
 import "./header.styles.scss";
 
 export default function Header() {
-  const { currentUser } = useContext(Context);
+  const { currentUser, hidden } = useContext(Context);
   return (
     <div className="header">
       <Link className="logo-container" to="/">
@@ -31,7 +33,9 @@ export default function Header() {
             SIGN IN
           </Link>
         )}
+        <CartIcon />
       </div>
+      {hidden ? null : <CartDropdown />}
     </div>
   );
 }
