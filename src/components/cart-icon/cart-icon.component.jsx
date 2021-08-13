@@ -7,7 +7,7 @@ import "./cart-icon.styles.scss";
 
 export default function CartIcon() {
   const { ToggleCart, cartItems } = useContext(Context);
-  console.log(cartItems);
+
   return (
     <div className="cart-icon" onClick={ToggleCart}>
       <ShoppingIcon className="shopping-icon" />

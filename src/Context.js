@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import dummyCollections from "./static/dummyCollections";
-import { addItemToCart } from "./components/cart-items/cart-utils";
+import {
+  addItemToCart,
+  removeFromCart,
+} from "./components/cart-items/cart-utils";
 
 const Context = React.createContext();
 
@@ -9,7 +12,7 @@ function ContextProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [hidden, setHidden] = useState(true);
   const [cartItems, setCartItems] = useState([]);
-  // const [total, setTotal] = useState();
+  const [total, setTotal] = useState();
 
   /* useEffect(() => {
     const myCart = JSON.parse(localStorage.getItem("MyCART"));
@@ -18,7 +21,7 @@ function ContextProvider({ children }) {
   }, []);
   */
 
-  /*
+  /* 가격 */
   useEffect(() => {
     setTotal(
       cartItems.reduce(
@@ -27,8 +30,7 @@ function ContextProvider({ children }) {
         0
       )
     );
-  }, []);
-  */
+  }, [cartItems]);
 
   /* 로그인 유저 */
 
@@ -73,6 +75,7 @@ function ContextProvider({ children }) {
         setHidden,
         addCartItems,
         cartItems,
+        total,
       }}
     >
       {children}

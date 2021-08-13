@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
 import { Context } from "../../Context";
+import { Link } from "react-router-dom";
 
 import CustomButton from "../custom-button/custom-button.component";
+
 import "./cart-dropdown.styles.scss";
 
 export default function CartDropdown() {
@@ -17,10 +19,19 @@ export default function CartDropdown() {
       </div>
     </div>
   ));
+  console.log(items);
   return (
     <div className="cart-dropdown">
-      <div className="cart-items">{items}</div>
-      <CustomButton onClick={ToggleCart}>GO TO CHECKOUT</CustomButton>
+      <div className="cart-items">
+        {items.length ? (
+          items
+        ) : (
+          <span className="empty-message">Your cart is empty 🙏🏻</span>
+        )}
+      </div>
+      <Link to="/checkout">
+        <CustomButton onClick={ToggleCart}>GO TO CHECKOUT</CustomButton>
+      </Link>
     </div>
   );
 }

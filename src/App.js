@@ -6,6 +6,8 @@ import "./App.css";
 
 import HomePage from "../src/components/pages/homepage/homepage.component";
 import ShopPage from "../src/components/pages/shop/shop.component";
+import CheckoutPage from "../src/components/pages/checkout/checkout.component";
+
 import Header from "./components/header/header.component";
 import SignInAndSignUpPage from "./components/pages/sign-in-and-sign-up/sign-in-and-sign-up";
 import { auth } from "../src/firebase/firebase.utils";
@@ -29,6 +31,9 @@ export default function App() {
         </Route>
         <Route path="/shop">
           <ShopPage />
+        </Route>
+        <Route exact path="/checkout">
+          <CheckoutPage />
         </Route>
         <Route exact path="/signin">
           {currentUser ? <Redirect to="/" /> : <SignInAndSignUpPage />}

@@ -11,6 +11,12 @@
   right: 40px;
   z-index: 5;
 
+  .empty-message {
+    font-size: 15px;
+    margin: 50px auto;
+    margin-top: 100px;
+  }
+
   .cart-items {
     height: 300px;
     display: flex;
@@ -47,6 +53,6 @@
 
   button {
     margin-top: auto;
-    font-size: 10px;
+    white-space: nowrap;
   }
 }
