@@ -41,6 +41,9 @@
       }
     }
   }
+  .cart-items::-webkit-scrollbar {
+    display: none;
+  }
 
   button {
     margin-top: auto;

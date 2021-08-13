@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import dummyCollections from "./static/dummyCollections";
-import { addItemToCart, saveCart } from "./components/cart-items/cart-utils";
+import { addItemToCart } from "./components/cart-items/cart-utils";
 
 const Context = React.createContext();
 
@@ -9,11 +9,24 @@ function ContextProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [hidden, setHidden] = useState(true);
   const [cartItems, setCartItems] = useState([]);
+  // const [total, setTotal] = useState();
 
   /* useEffect(() => {
     const myCart = JSON.parse(localStorage.getItem("MyCART"));
 
     setCartItems(myCart ? myCart : []);
+  }, []);
+  */
+
+  /*
+  useEffect(() => {
+    setTotal(
+      cartItems.reduce(
+        (accumalatedQuantity, cartItems) =>
+          accumalatedQuantity + cartItems.quantity * cartItems.price,
+        0
+      )
+    );
   }, []);
   */
 

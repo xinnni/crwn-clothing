@@ -7,7 +7,7 @@ import "./cart-dropdown.styles.scss";
 export default function CartDropdown() {
   const { cartItems, ToggleCart } = useContext(Context);
   const items = cartItems.map((item) => (
-    <div className="cart-item">
+    <div key={item.id} className="cart-item">
       <img src={item.imageUrl} alt="item" />
       <div className="item-details">
         <span className="name">{item.name}</span>
