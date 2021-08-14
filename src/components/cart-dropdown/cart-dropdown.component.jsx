@@ -8,6 +8,7 @@ import "./cart-dropdown.styles.scss";
 
 export default function CartDropdown() {
   const { cartItems, ToggleCart } = useContext(Context);
+  console.log(cartItems);
   const items = cartItems.map((item) => (
     <div key={item.id} className="cart-item">
       <img src={item.imageUrl} alt="item" />
@@ -19,7 +20,6 @@ export default function CartDropdown() {
       </div>
     </div>
   ));
-  console.log(items);
   return (
     <div className="cart-dropdown">
       <div className="cart-items">

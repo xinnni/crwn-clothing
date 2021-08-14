@@ -3,6 +3,8 @@ import { Context } from "../../../Context";
 
 import "./checkout.styles.scss";
 
+import CheckoutItem from "../../checkout-item/checkout-item.component";
+
 export default function CheckoutPage() {
   const { cartItems, total } = useContext(Context);
 
@@ -25,7 +27,9 @@ export default function CheckoutPage() {
           <span>Remove</span>
         </div>
       </div>
-      {cartItems.map((cartItem) => cartItem.name)}
+      {cartItems.map((cartItem) => (
+        <CheckoutItem key={cartItem.id} cartItem={cartItem} />
+      ))}
       <div className="total">
         <span>TOTAL: ${total}</span>
       </div>
