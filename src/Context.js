@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
-import dummyCollections from "./static/dummyCollections";
+import { dummyCollections } from "./static/dummyCollections";
 import {
   addItemToCart,
   removeFromCart,
@@ -13,6 +13,7 @@ function ContextProvider({ children }) {
   const [hidden, setHidden] = useState(true);
   const [cartItems, setCartItems] = useState([]);
   const [total, setTotal] = useState();
+  const [allItems, setAllItems] = useState(dummyCollections);
 
   /* useEffect(() => {
     const myCart = JSON.parse(localStorage.getItem("MyCART"));
@@ -93,6 +94,7 @@ function ContextProvider({ children }) {
         total,
         clearItem,
         removeFromCartItems,
+        allItems,
       }}
     >
       {children}
