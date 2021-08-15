@@ -60,6 +60,21 @@ function ContextProvider({ children }) {
     return setCartItems(addItemToCart(cartItems, newitems));
   }
 
+  /* 장바구니 삭제 */
+
+  function clearItem(name) {
+    return setCartItems((prevItems) => {
+      const items = prevItems.filter((item) => item.name !== name);
+      return items;
+    });
+  }
+
+  /* 장바구니 수량 추가 및 삭제 */
+
+  function removeFromCartItems(newitems) {
+    return setCartItems(removeFromCart(cartItems, newitems));
+  }
+
   /* 카트 토글 */
 
   function ToggleCart() {
@@ -76,6 +91,8 @@ function ContextProvider({ children }) {
         addCartItems,
         cartItems,
         total,
+        clearItem,
+        removeFromCartItems,
       }}
     >
       {children}
